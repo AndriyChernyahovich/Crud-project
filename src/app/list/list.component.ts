@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
   }
 
   toggleView(post: Post, i:number) {
-    this.similarPost = []
+    post.similarPost = []
    const elem = this.posts.find(item => item.id === i)
     if (elem) {
       this.checkSimilarPosts(post)
@@ -72,15 +72,23 @@ export class ListComponent implements OnInit {
 
   checkSimilarPosts(post:Post){
     const {title,description} = post
-    const titleWords = title.split(' ')
-    const descriptionWords = description.split(' ')
+    const titleWords = title.split(' ').map(item=> item.toLowerCase())
+    const descriptionWords = description.split(' ').map(item=> item.toLowerCase())
+    console.log(post.similarPost)
     this.posts.forEach((el:any)=>{
       if(el.id !== post.id){
-        let findDuplicates = (arr:any) => arr.filter((item:any, index:number) => arr.indexOf(item) != index)
+        let findDuplicates = (arr:any) => arr.filter((item:any, index:number) => {
+          item.toLowerCase()
+         return arr.indexOf(item) != index
+        })
         const duplicateTitle =  findDuplicates([...new Set(el.title.split(' ')),...new Set(titleWords)])
         const duplicateDesc = findDuplicates([...new Set(el.description.split(' ')), ...new Set(descriptionWords)])
-        if((duplicateTitle.length || duplicateDesc.length) && this.similarPost.length < 3){
-             this.similarPost.push(el)
+        if((duplicateTitle.length || duplicateDesc.length) && post.similarPost.length < 3){
+             // this.similarPost.push(el)
+          post.similarPost.push(el)
+
+          console.log(duplicateTitle)
+          console.log(duplicateDesc)
         }
       }
     })

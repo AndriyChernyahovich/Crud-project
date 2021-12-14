@@ -5,4 +5,5 @@ export  interface Post {
   id: number;
   date: Date;
   hasError: any;
+  similarPost:any[]
 }

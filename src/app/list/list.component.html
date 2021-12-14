@@ -15,12 +15,12 @@
   </div>
   <small class="post-date">{{ post.date | date:'medium' }}</small>
     <h2>Top similar announcements</h2>
-    <div *ngFor="let test of similarPost">
+    <div *ngFor="let test of post.similarPost">
       <div class="post-similar-title">{{test.title}}</div>
       <div class="post-similar-desc">{{test.description}}</div>
       <small class="post-date">{{ test.date | date:'medium' }}</small>
     </div>
-    <div class="not-similar" *ngIf="!similarPost.length">
+    <div class="not-similar" *ngIf="!post?.similarPost?.length">
       Similar post doesn't exist
     </div>
 </div>
